@@ -1,3 +1,11 @@
-<p>
-  teacher-detail works!
-</p>
+<div class="container">
+<div class="row">
+    <div class="col-xs-12">
+        <img style="max-width:400px;" *ngIf="teacher.photo" [src]="teacher.photo">
+      <h1>{{ teacher.id }}</h1>
+      <h3>{{ teacher.firstname }}</h3>
+      <p>{{ teacher.lastname }}</p>
+      <button class="btn btn-default" (click)="onBack()">Retour</button>
+    </div>
+  </div>
+</div>

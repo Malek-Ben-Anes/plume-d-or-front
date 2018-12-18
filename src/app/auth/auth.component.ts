@@ -32,9 +32,10 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.signIn('email', 'password').then(
-      () => {
-      this.authStatus = this.authService.isAuth;
+    const email = this.signinForm.get('email').value;
+    const password = this.signinForm.get('password').value;
+    this.authService.signIn(email, password).then(
+      () => {this.authStatus = this.authService.isAuth;
         this.router.navigate(['home']);
         console.log('sign in successfully');
       }

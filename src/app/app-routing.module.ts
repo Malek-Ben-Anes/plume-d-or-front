@@ -10,12 +10,12 @@ import { TeacherDetailComponent } from './dashboard/teachers/teacher-detail/teac
 import { TeacherCreateComponent } from './dashboard/teachers/teacher-create/teacher-create.component';
 
 const routes: Routes = [
-  { path: '', component: AuthComponent },
   { path: 'auth', component: AuthComponent },
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'teachers', component: TeachersComponent },
-  { path: 'teacher/:id', component: TeacherDetailComponent },
-  { path: 'new-teacher', component: TeacherCreateComponent },
+  { path: 'teachers/view/:id', component: TeacherDetailComponent },
+  { path: 'teachers/new', component: TeacherCreateComponent },
   { path: '**', component: FourOhFourComponent }];
 
 @NgModule({

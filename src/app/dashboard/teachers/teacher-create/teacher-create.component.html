@@ -1,3 +1,44 @@
-<p>
-  teacher-create works!
-</p>
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h2>Enregistrer un nouveau Enseignant</h2>
+      <form [formGroup]="teacherForm" (ngSubmit)="onSaveTeacher()">
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input type="text" id="firstname"
+                 class="form-control" formControlName="firstname">
+        </div>
+        <div class="form-group">
+          <label for="lastname">Last Name</label>
+          <input type="text" id="author"
+                 class="form-control" formControlName="lastname">
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <textarea id="age"
+                    class="form-control" formControlName="age">
+          </textarea>
+        </div>
+        <div class="form-group">
+            <h4>Ajouter une photo</h4>
+            <input type="file" (change)="detectFiles($event)"
+                   class="form-control" accept="image/*">
+            <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
+        </div>
+        <button class="btn btn-success" [disabled]="teacherForm.invalid"
+                type="submit">Enregistrer
+        </button>
+  
+      </form>
+    </div>
+  </div>
+
+
+
+<div style="text-align:center">
+    <label>
+      <input type="file" (change)="selectFile($event)">
+      </label>
+      <button [disabled]="!selectedFiles"
+  (click)="upload()">Upload</button>
+    </div>
+
