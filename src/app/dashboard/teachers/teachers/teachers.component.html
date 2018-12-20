@@ -8,7 +8,7 @@
           *ngFor="let teacher of teachers; let i = index"
           (click)="onViewTeacher(i)">
           <h3 class="list-group-item-heading">
-            {{ teacher.firstname }}
+            {{ teacher.id }}   {{ teacher.firstname }}
             <button class="btn btn-default pull-right" (click)="onDeleteTeacher(teacher)">
               <span class="glyphicon glyphicon-minus"></span>
             </button>

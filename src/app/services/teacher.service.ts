@@ -31,10 +31,13 @@ export class TeacherService {
   getTeachers()/*: Observable<Teacher[]>*/ {
     //this.teachers = data.val() ? data.val() : [];
 
-
-    return this.http.get(url).subscribe((data) => {
+    let teachers = this.http.get(url).subscribe((data) => {
+      console.log(data);
       this.teachers = data;
+      return data;
     });
+
+    return teachers;
     //this.getTeachers();
 
 
