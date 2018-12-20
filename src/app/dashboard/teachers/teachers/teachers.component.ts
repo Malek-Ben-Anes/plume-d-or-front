@@ -11,18 +11,22 @@ import { TeacherService } from 'src/app/services/teacher.service';
 })
 export class TeachersComponent implements OnInit {
 
-  teachers: Teacher[];
+  teachers;//: Teacher[];
   teachersSubscription: Subscription;
 
   constructor(private teachersService: TeacherService, private router: Router) {}
 
   ngOnInit() {
+    this.teachers = this.teachersService.teachers;
+    console.log(this.teachers);
+    console.log(this.teachersService.teachers);
+    /*
     this.teachersSubscription = this.teachersService.teacherSubject.subscribe(
       (teachers: Teacher[]) => {
         this.teachers = teachers;
       }
     );
-    this.teachersService.emitTeachers();
+    this.teachersService.emitTeachers();*/
   }
 
   onNewTeacher() {
