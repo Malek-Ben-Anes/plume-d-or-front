@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Teacher } from '../models/Teacher';
 import { Gender } from '../models/User';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 const url: string = 'http://localhost:8090/teachers';
 
@@ -11,16 +11,30 @@ const url: string = 'http://localhost:8090/teachers';
 })
 export class TeacherService {
   
-  teachers;//: Teacher;
-
+  teachers: Teacher[] = [];
   teacherSubject = new Subject<Teacher[]>();
 
   constructor(private http: HttpClient) {
-    //this.getTeachers();
+    this.getTeachers();
   }
 
   emitTeachers() {
     this.teacherSubject.next(this.teachers);
+  }
+
+  getTeachers(){
+    this.http.get<Teacher[]>(url).subscribe(
+      teachers => { this.teachers = teachers; 
+        this.emitTeachers();
+      console.log(this.teachers);},
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+      }
+    );
   }
 
   saveTeacher(teacher: Teacher) {
@@ -28,24 +42,9 @@ export class TeacherService {
     //request to database to save all teachers
   }
 
-  getTeachers()/*: Observable<Teacher[]>*/ {
-    //this.teachers = data.val() ? data.val() : [];
 
-    let teachers = this.http.get(url).subscribe((data) => {
-      console.log(data);
-      this.teachers = data;
-      return data;
-    });
-
-    return teachers;
-    //this.getTeachers();
-
-
-  /*  this.emitTeachers();*/
-  }
 
   getSingleTeacher(id: number) {
-
     return new Promise((resolve, reject) => {
       //   this.teachers.find((teacherElement) => {
       //     if(teacherElement.id == id){
@@ -54,8 +53,6 @@ export class TeacherService {
       // })
       resolve(new Teacher(id, "teacher", "teacher", Gender.MALE));
     })
-
-
   }
 
   createNewTeacher(newTeacher: Teacher) {
