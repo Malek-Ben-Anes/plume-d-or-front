@@ -1,22 +1,25 @@
 <div class="container">
-<div class="row">
+  <div class="row">
     <div class="col-xs-12">
       <h2>Les enseignants</h2>
+      <button class="btn btn-primary" (click)="onNewTeacher()">Nouveau Enseignant</button><br>
       <div class="list-group">
-        <button
-          class="list-group-item"
-          *ngFor="let teacher of teachers; let i = index"
-          (click)="onViewTeacher(i)">
+        <div class="list-group-item" *ngFor="let teacher of teachers">
           <h3 class="list-group-item-heading">
-            {{ teacher.id }}   {{ teacher.firstname }}
+            <div (click)="onViewTeacher(teacher.id)">
+              <img src="../../../../assets/images/profile-logo.png" alt="Responsive image" width="90px">
+              {{ teacher.firstname }} {{ teacher.lastname }}
+            </div>
             <button class="btn btn-default pull-right" (click)="onDeleteTeacher(teacher)">
-              <span class="glyphicon glyphicon-minus"></span>
+              <span class="glyphicon glyphicon-minus">Remove</span>
+            </button>
+            <button class="btn btn-default pull-right" (click)="onUpdateTeacher(teacher.id)">
+              <span class="glyphicon glyphicon-plus">Update</span>
             </button>
           </h3>
-          <p class="list-group-item-text">{{ teacher.lastname }}</p>
-        </button>
+          <p class="list-group-item-text">{{ teacher.email }}</p>
+        </div>
       </div>
-      <button class="btn btn-primary" (click)="onNewTeacher()">Nouveau Enseignant</button>
     </div>
   </div>
 </div>

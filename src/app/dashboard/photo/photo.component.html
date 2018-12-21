@@ -1,0 +1,10 @@
+    <div class="col-sm-4">
+      <div class="form-group">
+        <h4>Ajouter une photo</h4>
+        <img src="../../../../assets/images/profile-logo.png" alt="Responsive image"  width="90px">
+        <input type="file" name="photo" ng2FileSelect [uploader]="uploader" accept="image/*"/>
+        <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+          Charger l'image
+        </button>
+      </div>
+    </div>

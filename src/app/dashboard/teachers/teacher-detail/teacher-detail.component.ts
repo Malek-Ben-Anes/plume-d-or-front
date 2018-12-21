@@ -11,15 +11,14 @@ import { Gender } from 'src/app/models/User';
 })
 export class TeacherDetailComponent implements OnInit {
 
-  teacher: Teacher;
+  teacher: Teacher = new Teacher();
 
   constructor(private route: ActivatedRoute, private teachersService: TeacherService,
               private router: Router) {}
 
   ngOnInit() {
-    this.teacher = new Teacher();
-    const id = this.route.snapshot.params['id'];
-    this.teachersService.getSingleTeacher(+id).then(
+    this.teacher.id = this.route.snapshot.params['id'];
+    this.teachersService.getSingleTeacher(+this.teacher.id).then(
       (teacher: Teacher) => {
         console.log(teacher);
         this.teacher = teacher;
@@ -30,5 +29,4 @@ export class TeacherDetailComponent implements OnInit {
   onBack() {
     this.router.navigate(['/teachers']);
   }
-
 }

@@ -1,16 +1,22 @@
 <div class="container">
   <div class="row">
-    <app-photo [user]="newTeacher"></app-photo>
+    <app-photo [user]="teacher"></app-photo>
     <div class="col-sm-8">
-      <h2>Enregistrer un nouveau Enseignant</h2>
-      <form [formGroup]="teacherForm" (ngSubmit)="onSaveTeacher()">
+      <h2>Update Teacher</h2>
+      <form [formGroup]="teacherForm" (ngSubmit)="onUpdateTeacher()">
         <div class="form-group">
           <label for="firstname">First Name</label>
           <input type="text" id="firstname" class="form-control" formControlName="firstname">
+         <!-- <div *ngIf="teacherForm.controls.firstName.errors?.required && teacherForm.controls.firstName.touched" class="error">
+              *Required
+            </div>-->
         </div>
         <div class="form-group">
           <label for="lastname">Last Name</label>
           <input type="text" id="lastname" class="form-control" formControlName="lastname">
+          <!--<div *ngIf="teacherForm.controls.lastName.errors?.required && teacherForm.controls.lastName.touched" class="error">
+              *Required
+            </div>-->
         </div>
 
         <div class="form-group">
@@ -41,7 +47,7 @@
           <textarea id="echelon" class="form-control" formControlName="echelon">
           </textarea>
         </div>
-        <button class="btn btn-success"  [disabled]="teacherForm.invalid" type="submit">Enregistrer
+        <button class="btn btn-success"   type="submit">Update
         </button>
       </form>
     </div>

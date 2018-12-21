@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { TeacherService } from 'src/app/services/teacher.service';
   templateUrl: './teachers.component.html',
   styleUrls: ['./teachers.component.scss']
 })
-export class TeachersComponent implements OnInit {
+export class TeachersComponent implements OnInit, OnDestroy {
 
   teachers: Teacher[] = [];
   teachersSubscription: Subscription;
@@ -20,31 +20,30 @@ export class TeachersComponent implements OnInit {
   constructor(private teachersService: TeacherService, private router: Router) {}
 
   ngOnInit() {
-    this.teachersSubscription = this.teachersService.teacherSubject.asObservable().subscribe(
+    this.teachersSubscription = this.teachersService.teacherSubject.subscribe(
       (teachers) => {
-        console.log("emettre");
-        
         this.teachers = teachers;
-        console.log(teachers);
-        this.teachersService.emitTeachers(); 
       }
     );
-     
+    this.teachersService.emitTeachers();
+  }
+
+  onViewTeacher(id: number) {
+    this.router.navigate(['teachers', 'view', id]);
   }
 
   onNewTeacher() {
-    console.log(this.teachersService.emitTeachers());
-    //this.router.navigate(['teachers', 'new']);
+    this.router.navigate(['teachers', 'new']);
+  }
+
+  onUpdateTeacher(id: number) {
+    this.router.navigate(['teachers', 'update', id]);
   }
 
   onDeleteTeacher(teacher: Teacher) {
     this.teachersService.removeTeacher(teacher);
   }
 
-  onViewTeacher(id: number) {
-    this.router.navigate(['teachers', 'view', id]);
-  }
-  
   ngOnDestroy() {
     this.teachersSubscription.unsubscribe();
   }

@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { Teacher } from '../models/Teacher';
 import { Gender } from '../models/User';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { reject } from 'q';
 
 const url: string = 'http://localhost:8090/teachers';
 
@@ -24,10 +25,11 @@ export class TeacherService {
 
   getTeachers(){
     this.http.get<Teacher[]>(url).subscribe(
-      teachers => { this.teachers = teachers; 
+      teachers => { 
+        this.teachers = teachers; 
         this.emitTeachers();
-      console.log(this.teachers);},
-      (err: HttpErrorResponse) => {
+        console.log(this.teachers);
+      }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
         } else {
@@ -37,23 +39,54 @@ export class TeacherService {
     );
   }
 
-  saveTeacher(teacher: Teacher) {
-    this.teachers.push(teacher);
-    //request to database to save all teachers
-  }
-
-
-
   getSingleTeacher(id: number) {
     return new Promise((resolve, reject) => {
-      //   this.teachers.find((teacherElement) => {
-      //     if(teacherElement.id == id){
-      //       return teacherElement;
-      //     }
-      // })
-      resolve(new Teacher(id, "teacher", "teacher", Gender.MALE));
-    })
+        let singleTeacher = this.teachers.find((el) => {
+            return el.id == id
+        })
+        if (singleTeacher )
+          resolve(singleTeacher);
+        else 
+          reject("can't find this teacher");
+      })
+      /*let SingleTeacher: Teacher = new Teacher();
+      this.http.get<Teacher>(url + '/' + id).subscribe( teacher => { 
+        SingleTeacher = teacher;
+        resolve(SingleTeacher); }*/
+}
+  saveTeacher(teacher: Teacher) {
+    const req = this.http.post(url, teacher).subscribe(teacherAdded => {
+      this.teachers.push(<Teacher>teacherAdded);
+      this.emitTeachers();
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+      }
+    }
+    )
   }
+  updateTeacher(teacher: Teacher) {
+    const req = this.http.put(url, teacher).subscribe( (teacherUpdated: Teacher) => {
+      let singleTeacher = this.teachers.find((el) => {
+        return el.id == teacherUpdated.id
+    })
+      singleTeacher = teacherUpdated;
+      console.log(singleTeacher);
+      this.emitTeachers();
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+      }
+    }
+    )
+  }
+
+
+
 
   createNewTeacher(newTeacher: Teacher) {
     this.teachers.push(newTeacher);

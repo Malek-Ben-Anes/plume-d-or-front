@@ -20,13 +20,15 @@ import { TeacherService } from './services/teacher.service';
 import { ImageService } from './services/image.service';
 
 import { FileSelectDirective } from 'ng2-file-upload';
+import { PhotoComponent } from './dashboard/photo/photo.component';
+import { TeacherUpdateComponent } from './dashboard/teachers/teacher-update/teacher-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,    
     FourOhFourComponent, HomeComponent, HeaderComponent, FooterComponent, TeachersComponent, TeacherDetailComponent, TeacherCreateComponent,    
-    FileSelectDirective
+    FileSelectDirective, PhotoComponent, TeacherUpdateComponent
   ],
   imports: [
     BrowserModule,
