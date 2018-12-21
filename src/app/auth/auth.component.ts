@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-auth',
@@ -14,14 +15,18 @@ export class AuthComponent implements OnInit {
   errorMessage: string;
 
   authStatus: boolean;
+  teachers;
 
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private http: HttpClient ) { }
 
   ngOnInit() {
     this.authStatus = this.authService.isAuth;
     this.initForm();
+
+    this.http.get('http://localhost:8090/teachers').subscribe(data => this.teachers = data );
   }
 
   initForm() {
@@ -32,6 +37,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.teachers);
     const email = this.signinForm.get('email').value;
     const password = this.signinForm.get('password').value;
     this.authService.signIn(email, password).then(

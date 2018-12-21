@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { /*HttpClient, HttpResponse, HttpEventType,*/ HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,13 +17,16 @@ import { TeacherDetailComponent } from './dashboard/teachers/teacher-detail/teac
 import { TeacherCreateComponent } from './dashboard/teachers/teacher-create/teacher-create.component';
 import { FileUploadService } from './services/file-upload.service';
 import { TeacherService } from './services/teacher.service';
+import { ImageService } from './services/image.service';
 
+import { FileSelectDirective } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,    
     FourOhFourComponent, HomeComponent, HeaderComponent, FooterComponent, TeachersComponent, TeacherDetailComponent, TeacherCreateComponent,    
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { TeacherService } from './services/teacher.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, FileUploadService, TeacherService],
+  providers: [AuthService, FileUploadService, TeacherService, ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

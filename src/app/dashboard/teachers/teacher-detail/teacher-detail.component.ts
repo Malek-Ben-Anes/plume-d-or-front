@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Teacher } from 'src/app/models/Teacher';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeacherService } from 'src/app/services/teacher.service';
+import { Gender } from 'src/app/models/User';
 
 @Component({
   selector: 'app-teacher-detail',
@@ -16,7 +17,7 @@ export class TeacherDetailComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    this.teacher = new Teacher( 0, '', '');
+    this.teacher = new Teacher();
     const id = this.route.snapshot.params['id'];
     this.teachersService.getSingleTeacher(+id).then(
       (teacher: Teacher) => {
