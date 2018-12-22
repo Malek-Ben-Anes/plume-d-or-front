@@ -18,12 +18,20 @@ export class TeacherCreateComponent implements OnInit {
   newTeacher: Teacher;
   teacherForm: FormGroup;
 
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'file'});
+
   constructor(private formBuilder: FormBuilder, private teachersService: TeacherService,
     private router: Router, private uploadService: FileUploadService, private imageService: ImageService) { }
 
   ngOnInit() {
     this.newTeacher = new Teacher();
     this.initForm();
+
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+       console.log('ImageUpload:uploaded:', item, status, response);
+       alert('File uploaded successfully');
+    }
   }
 
   initForm() {
@@ -48,7 +56,6 @@ export class TeacherCreateComponent implements OnInit {
     this.newTeacher.echelon = this.teacherForm.get('echelon').value;
     this.teachersService.createNewTeacher(this.newTeacher);
     this.router.navigate(['/teachers']);
-  }
 
 
 }

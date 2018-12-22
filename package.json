@@ -21,7 +21,10 @@
     "@angular/router": "~7.1.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
+<<<<<<< HEAD
     "ng-http-loader": "^5.0.0",
+=======
+>>>>>>> dd355a4083a3ae900f65d77a4913efbc66b34c09
     "ng2-file-upload": "^1.3.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

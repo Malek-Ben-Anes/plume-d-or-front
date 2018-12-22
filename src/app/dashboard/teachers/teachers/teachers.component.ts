@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { Teacher } from 'src/app/models/Teacher';
 import { TeacherService } from 'src/app/services/teacher.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -17,15 +18,34 @@ export class TeachersComponent implements OnInit, OnDestroy {
   teachers: Teacher[] = [];
   teachersSubscription: Subscription;
 
-  constructor(private teachersService: TeacherService, private router: Router) {}
+  constructor(private teachersService: TeacherService, private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
+
+
+    this.http.get<Teacher[]>('http://localhost:8090/teachers').subscribe(
+      data => { console.log(data);
+      this.teachers = data; },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+      }
+    );
+
+    /*
+    this.teachers = this.teachersService.getTeachers();
+    console.log(this.teachers);
+    console.log(this.teachersService.getTeachers());
+    
     this.teachersSubscription = this.teachersService.teacherSubject.subscribe(
       (teachers) => {
         this.teachers = teachers;
       }
     );
-    this.teachersService.emitTeachers();
+    this.teachersService.emitTeachers();*/
   }
 
   onViewTeacher(id: number) {
